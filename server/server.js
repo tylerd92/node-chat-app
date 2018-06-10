@@ -23,11 +23,12 @@ io.on('connection', (socket) => {
         if(!isRealString(params.name) || !isRealString(params.room)) {
             return callback('Name and room name are required');
         }
-
-        socket.join(params.room);
+        var roomString = params.room.toUpperCase();
+        socket.join(roomString);
         users.removeUser(socket.id);
-        users.addUser(socket.id, params.name, params.room);
-        io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+        
+        users.addUser(socket.id, params.name, roomString);
+        io.to(roomString).emit('updateUserList', users.getUserList(roomString));
         //socket.leave(params.room) - allows you to leave a room
 
         // io.emit -> io.to('The Office Fans').emit()
@@ -35,7 +36,7 @@ io.on('connection', (socket) => {
         // socket.emit
 
         socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
-        socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
+        socket.broadcast.to(roomString).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
 
         callback();
     });
