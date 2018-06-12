@@ -33,23 +33,23 @@ class Users {
     }
     
     // method still in works - will update soon
-    // isNameDuplicate(name, room) {
-    //     var users = this.getUserList(room);
-    //     //console.log(users);
-    //     if (users.length > 0) { 
+    isNameDuplicate(name, room) {
+        var users = this.getUserList(room);
+        //console.log(users);
+        if (users.length > 0) { 
             
-    //        for(var i = 0; i < users.length; i++) {
-    //            if(users[i].name !== name) {
-    //               return true;
-    //            }
-    //            return false;
-    //        }
+           for(var i = 0; i < users.length; i++) {
+               if(users[i].name !== name) {
+                  return true;
+               }
+               return false;
+           }
            
            
-    //     } else { // if the user list is empty
-    //         return false;
-    //     }
-    // }
+        } else { // if the user list is empty
+            return false;
+        }
+    }
 }
 
 module.exports = {Users};
