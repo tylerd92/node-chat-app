@@ -22,8 +22,16 @@ io.on('connection', (socket) => {
     socket.on('join', (params, callback) => {
         if(!isRealString(params.name) || !isRealString(params.room)) {
             return callback('Name and room name are required');
-        }
+        } 
         var roomString = params.room.toUpperCase();
+       
+        //console.log(users.getUserList(roomString));
+
+
+        // if (!users.isNameUnique(params.name, roomString)) {
+        //     return callback('Name is taken');
+        // }
+        
         socket.join(roomString);
         users.removeUser(socket.id);
         

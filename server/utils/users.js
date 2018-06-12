@@ -1,9 +1,3 @@
-// addUser(id, name, room)
-// removeUser(id)
-// getUser(id)
-// getUserList(room)
-
-
 class Users {
     constructor() {
         this.users = [];
@@ -32,23 +26,30 @@ class Users {
     }
 
     getUserList(room) {
-        var users = this.users.filter((user) =>  user.room === room );
+        var users = this.users.filter((user) =>  user.room === room);
         var namesArray = users.map((user) => user.name );
 
         return namesArray;
     }
+    
+    // method still in works - will update soon
+    // isNameDuplicate(name, room) {
+    //     var users = this.getUserList(room);
+    //     //console.log(users);
+    //     if (users.length > 0) { 
+            
+    //        for(var i = 0; i < users.length; i++) {
+    //            if(users[i].name !== name) {
+    //               return true;
+    //            }
+    //            return false;
+    //        }
+           
+           
+    //     } else { // if the user list is empty
+    //         return false;
+    //     }
+    // }
 }
 
-// class Person {
-//     constructor(name, age) {
-//         this.name = name;
-//         this.age = age;
-//     }
-//     getUserDescription() {
-//         return `${this.name} is ${this.age} year(s) old.`;
-//     }
-// }
-// var me = new Person('Tyler', 25); 
-// var description = me.getUserDescription(); 
-// console.log(description);
 module.exports = {Users};

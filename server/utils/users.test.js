@@ -20,7 +20,18 @@ describe('Users', () => {
             id: '3',
             name: 'Julie',
             room: 'Node Course'
-        }]
+        },
+        {
+            id: '4',
+            name: 'Jack',
+            room: 'Typescript Course'
+        },
+        {
+            id: '5',
+            name: 'Jack',
+            room: 'Typescript Course'
+        },
+        ]
     });
 
     it ('should add new user', () => {
@@ -37,13 +48,13 @@ describe('Users', () => {
     it('should remove a user', () => {
         var user = users.removeUser('2');
         expect(user.name).toBe('Jen');
-        expect(users.users.length).toBe(2);
+        expect(users.users.length).toBe(4);
     });
 
     it('should not remove a user', () => {
-        var user = users.removeUser('4');
+        var user = users.removeUser('6');
         expect(user).toNotExist();
-        expect(users.users.length).toBe(3);
+        expect(users.users.length).toBe(5);
     });
 
     it('should find user', () => {
@@ -52,7 +63,7 @@ describe('Users', () => {
     });
 
     it('should not find user', () => {
-        var user = users.getUser('4');
+        var user = users.getUser('6');
         expect(user).toNotExist();
     });
 
