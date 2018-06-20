@@ -34,21 +34,17 @@ class Users {
     
     // method still in works - will update soon
     isNameDuplicate(name, room) {
+        var dupe = true;
         var users = this.getUserList(room);
-        //console.log(users);
-        if (users.length > 0) { 
-            
-           for(var i = 0; i < users.length; i++) {
-               if(users[i].name !== name) {
-                  return true;
-               }
-               return false;
-           }
-           
-           
-        } else { // if the user list is empty
-            return false;
+        for (var i = 0; i < users.length; i++) {
+            if (users[i] === name) {
+                console.log('User is already here');
+                return dupe;
+            } 
         }
+
+        dupe = false;
+        return dupe;
     }
 }
 

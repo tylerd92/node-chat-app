@@ -76,4 +76,13 @@ describe('Users', () => {
         var userList = users.getUserList('React Course');
         expect(userList).toEqual(['Jen']);
     });
+
+    // it('should return true for Jack', () => {
+    //     console.log('Jack' === 'Jack');
+    //     expect(users.isNameDuplicate('Jack', 'Typescript Course')).toExist();
+    // });
+
+    // it('should return false for Tyler', () => {
+    //     expect(users.isNameDuplicate('Tyler', 'React Course')).toNotExist();
+    // });
 });

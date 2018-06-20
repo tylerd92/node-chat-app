@@ -25,12 +25,11 @@ io.on('connection', (socket) => {
         } 
         var roomString = params.room.toUpperCase();
        
-        //console.log(users.getUserList(roomString));
-
-
-        // if (!users.isNameUnique(params.name, roomString)) {
-        //     return callback('Name is taken');
-        // }
+        //var roomUserList = users.getUserList(roomString);
+        
+        if (users.isNameDuplicate(params.name, roomString)) {
+            return callback('Username already taken');
+        }
         
         socket.join(roomString);
         users.removeUser(socket.id);
