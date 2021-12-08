@@ -1,5 +1,5 @@
 const expect = require('expect');
-var {isRealString} = require('./validation');
+var {isRealString} = require('../utils/validation');
 
 describe('isRealString', () => {
 
