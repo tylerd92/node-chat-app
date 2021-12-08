@@ -16,10 +16,10 @@
   "dependencies": {
     "express": "^4.14.0",
     "moment": "^2.22.1",
-    "socket.io": "^1.4.8"
+    "socket.io": "^4.4.0"
   },
   "devDependencies": {
     "expect": "^1.20.2",
-    "mocha": "^3.0.2"
+    "mocha": "^9.1.3"
   }
 }
