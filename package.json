@@ -7,6 +7,7 @@
     "start": "node server/server.js",
     "test": "mocha server/**/*.test.js",
     "message-test": "mocha server/utils/message.test.js",
+    "users-test": "mocha server/utils/users.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
   "type": "module",

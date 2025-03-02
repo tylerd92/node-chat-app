@@ -31,21 +31,6 @@ class Users {
 
         return namesArray;
     }
-    
-    // method still in works - will update soon
-    isNameDuplicate(name, room) {
-        var dupe = true;
-        var users = this.getUserList(room);
-        for (var i = 0; i < users.length; i++) {
-            if (users[i] === name) {
-                console.log('User is already here');
-                return dupe;
-            } 
-        }
-
-        dupe = false;
-        return dupe;
-    }
 }
 
-module.exports = {Users};
+export default Users;
