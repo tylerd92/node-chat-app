@@ -1,8 +1,5 @@
-// var expect = require('expect');
 import {expect} from 'chai';
 import {generateMessage, generateLocationMessage} from './message.js';
-
-// var {generateMessage, generateLocationMessage} = require('./message');  
 
 describe('generateMessage', () => {
     it('should generate correct message object', () => {

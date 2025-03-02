@@ -1,8 +1,5 @@
 import {expect} from 'chai';
 import Users from './users.js';
-// const expect = require('expect');
-
-// const {Users} = require('./users');
 
 describe('Users', () => {
     let users;
