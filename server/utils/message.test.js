@@ -1,15 +1,17 @@
-var expect = require('expect');
+// var expect = require('expect');
+import {expect} from 'chai';
+import {generateMessage, generateLocationMessage} from './message.js';
 
-var {generateMessage, generateLocationMessage} = require('./message');  
+// var {generateMessage, generateLocationMessage} = require('./message');  
 
 describe('generateMessage', () => {
     it('should generate correct message object', () => {
         var from = 'Tyler';
         var text = 'Test message';
         var res = generateMessage(from, text);
-        expect(res.from).toBe(from);
-        expect(res.text).toBe(text);
-        expect(res.createdAt).toBeA('number');
+        expect(res.from).to.equal(from);
+        expect(res.text).to.equal(text);
+        expect(res.createdAt).to.be.a('number');
     });
 });
 
@@ -21,9 +23,9 @@ describe('generateLocationMessage', () => {
         var url = 'https://google.com/maps?q=13,19';
         var message = generateLocationMessage(from, latitude, longtitude);
 
-        expect(message.from).toBe(from);
-        expect(message.url).toBe(url);
-        expect(message.createdAt).toBeA('number');
+        expect(message.from).to.equal(from);
+        expect(message.url).to.equal(url);
+        expect(message.createdAt).to.be.a('number');
 
     });
 }); 

@@ -1,6 +1,6 @@
-var moment = require('moment');
+import moment from "moment";
 
-var generateMessage = (from, text) => {
+const generateMessage = (from, text) => {
     return {
         from,
         text,
@@ -8,7 +8,7 @@ var generateMessage = (from, text) => {
     };
 };
 
-var generateLocationMessage = (from, latitude, longitude) => {
+const generateLocationMessage = (from, latitude, longitude) => {
     return {
         from,
         url: `https://google.com/maps?q=${latitude},${longitude}`,
@@ -16,4 +16,4 @@ var generateLocationMessage = (from, latitude, longitude) => {
     };
 };
 
-module.exports = {generateMessage, generateLocationMessage};
+export {generateMessage, generateLocationMessage};
