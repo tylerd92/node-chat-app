@@ -22,7 +22,7 @@ describe('Users', () => {
         },
         {
             id: '4',
-            name: 'Jack',
+            name: 'Mike',
             room: 'Typescript Course'
         },
         {
@@ -74,5 +74,13 @@ describe('Users', () => {
     it('should return names for react course', () => {
         var userList = users.getUserList('React Course');
         expect(userList).to.eql(['Jen']);
+    });
+
+    it('should return true for Jack', () => {
+        expect(users.isNameDuplicate('Jack', 'Typescript Course')).to.equal(true);
+    });
+
+    it('should return false for Tyler', () => {
+        expect(users.isNameDuplicate('Tyler', 'React Course')).to.equal(false);
     });
 });

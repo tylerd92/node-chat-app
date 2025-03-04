@@ -31,6 +31,19 @@ class Users {
 
         return namesArray;
     }
+
+    isNameDuplicate(name, room) {
+        var dupe = true;
+        var users = this.getUserList(room);
+        for (var i = 0; i < users.length; i++) {
+            if (users[i] === name) {
+                return dupe;
+            } 
+        }
+
+        dupe = false;
+        return dupe;
+    }
 }
 
 export default Users;
