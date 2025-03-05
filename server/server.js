@@ -1,18 +1,23 @@
-const path = require('path');
-const http = require('http');
-const express = require('express');
-const socketIO = require('socket.io');
+import path from 'path';
+import http from 'http';
+import express from 'express';
+import { Server } from 'socket.io';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const {generateMessage, generateLocationMessage} = require('./utils/message');
-const {isRealString} = require('./utils/validation');
-const {Users} = require('./utils/users');
 
+import {generateMessage, generateLocationMessage} from './utils/message.js';
+import {isRealString} from './utils/validation.js';
+import Users from './utils/users.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
-var app = express();
-var server = http.createServer(app);
-var io = socketIO(server);
-var users = new Users();
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+const users = new Users();
 
 app.use(express.static(publicPath));
 
@@ -23,9 +28,7 @@ io.on('connection', (socket) => {
         if(!isRealString(params.name) || !isRealString(params.room)) {
             return callback('Name and room name are required');
         } 
-        var roomString = params.room.toUpperCase();
-       
-        //var roomUserList = users.getUserList(roomString);
+        const roomString = params.room.toUpperCase();
         
         if (users.isNameDuplicate(params.name, roomString)) {
             return callback('Username already taken');
@@ -36,11 +39,6 @@ io.on('connection', (socket) => {
         
         users.addUser(socket.id, params.name, roomString);
         io.to(roomString).emit('updateUserList', users.getUserList(roomString));
-        //socket.leave(params.room) - allows you to leave a room
-
-        // io.emit -> io.to('The Office Fans').emit()
-        // socket.broadcast.emit -> socket.broadcast.to('The Office Fans').emit
-        // socket.emit
 
         socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
         socket.broadcast.to(roomString).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
@@ -49,7 +47,7 @@ io.on('connection', (socket) => {
     });
     
     socket.on('createMessage', (message, callback) => {
-        var user = users.getUser(socket.id);
+        const user = users.getUser(socket.id);
         if(user && isRealString(message.text)) {
             io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
         }
@@ -58,14 +56,14 @@ io.on('connection', (socket) => {
     });
 
     socket.on('createLocationMessage', (coords) => {
-        var user = users.getUser(socket.id);
+        const user = users.getUser(socket.id);
         if (user) {
             io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
         } 
     });
 
     socket.on('disconnect', () => {
-        var user = users.removeUser(socket.id);
+        const user = users.removeUser(socket.id);
         if (user) {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));
             io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left`));
@@ -77,4 +75,4 @@ server.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
 
-module.exports = {app};
+export {app};

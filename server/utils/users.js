@@ -4,17 +4,17 @@ class Users {
     }
 
     addUser(id, name, room) {
-        var user = {id, name, room};
+        const user = {id, name, room};
         this.users.push(user);
         return user;
     }
 
     removeUser(id) {
         // return user that that was removed
-        var user = this.getUser(id);
+        const user = this.getUser(id);
 
         if(user) {
-            var newList = this.users.filter((user) => user.id !== id);
+            let newList = this.users.filter((user) => user.id !== id);
             this.users = newList;
         }
         
@@ -26,19 +26,17 @@ class Users {
     }
 
     getUserList(room) {
-        var users = this.users.filter((user) =>  user.room === room);
-        var namesArray = users.map((user) => user.name );
+        const users = this.users.filter((user) =>  user.room === room);
+        const namesArray = users.map((user) => user.name );
 
         return namesArray;
     }
-    
-    // method still in works - will update soon
+
     isNameDuplicate(name, room) {
-        var dupe = true;
-        var users = this.getUserList(room);
-        for (var i = 0; i < users.length; i++) {
+        let dupe = true;
+        const users = this.getUserList(room);
+        for (let i = 0; i < users.length; i++) {
             if (users[i] === name) {
-                console.log('User is already here');
                 return dupe;
             } 
         }
@@ -48,4 +46,4 @@ class Users {
     }
 }
 
-module.exports = {Users};
+export default Users;
