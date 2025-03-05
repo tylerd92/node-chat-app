@@ -3,9 +3,9 @@ import {generateMessage, generateLocationMessage} from './message.js';
 
 describe('generateMessage', () => {
     it('should generate correct message object', () => {
-        var from = 'Tyler';
-        var text = 'Test message';
-        var res = generateMessage(from, text);
+        const from = 'Tyler';
+        const text = 'Test message';
+        const res = generateMessage(from, text);
         expect(res.from).to.equal(from);
         expect(res.text).to.equal(text);
         expect(res.createdAt).to.be.a('number');
@@ -14,11 +14,11 @@ describe('generateMessage', () => {
 
 describe('generateLocationMessage', () => {
     it('should generate correct location object', () => {
-        var from = 'Admin';
-        var latitude = 13;
-        var longtitude = 19;
-        var url = 'https://google.com/maps?q=13,19';
-        var message = generateLocationMessage(from, latitude, longtitude);
+        const from = 'Admin';
+        const latitude = 13;
+        const longtitude = 19;
+        const url = 'https://google.com/maps?q=13,19';
+        const message = generateLocationMessage(from, latitude, longtitude);
 
         expect(message.from).to.equal(from);
         expect(message.url).to.equal(url);

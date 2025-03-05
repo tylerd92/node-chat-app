@@ -34,45 +34,45 @@ describe('Users', () => {
     });
 
     it ('should add new user', () => {
-        var users = new Users();
-        var user = {
+        const users = new Users();
+        const user = {
             id: '123',
             name: 'Tyler',
             room: 'The Office Fans'
         }
-        var resUser = users.addUser(user.id, user.name, user.room);
+        const resUser = users.addUser(user.id, user.name, user.room);
         expect(users.users).to.eql([user]);
     });
 
     it('should remove a user', () => {
-        var user = users.removeUser('2');
+        const user = users.removeUser('2');
         expect(user.name).to.equal('Jen');
         expect(users.users.length).to.equal(4);
     });
 
     it('should not remove a user', () => {
-        var user = users.removeUser('6');
+        const user = users.removeUser('6');
         expect(user).to.be.undefined;
         expect(users.users.length).to.equal(5);
     });
 
     it('should find user', () => {
-        var user = users.getUser('3');
+        const user = users.getUser('3');
         expect(user.name).to.equal('Julie');
     });
 
     it('should not find user', () => {
-        var user = users.getUser('6');
+        const user = users.getUser('6');
         expect(user).to.be.undefined;
     });
 
     it('should return names for node course', () => {
-        var userList = users.getUserList('Node Course');
+        const userList = users.getUserList('Node Course');
         expect(userList).to.eql(['Mike', 'Julie']);
     });
 
     it('should return names for react course', () => {
-        var userList = users.getUserList('React Course');
+        const userList = users.getUserList('React Course');
         expect(userList).to.eql(['Jen']);
     });
 
