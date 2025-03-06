@@ -1,25 +1,25 @@
-var socket = io();
+const socket = io();
 
 function scrollToBottom() {
     //Selectors
-    var messages = jQuery('#messages');
-    var newMessage = messages.children('li:last-child');
+    const messages = document.getElementById('messages');
+    const newMessage = messages.lastElementChild;
     //Heights
-    var clientHeight = messages.prop('clientHeight');
-    var scrollTop = messages.prop('scrollTop');
-    var scrollHeight = messages.prop('scrollHeight');
-    var newMessageHeight = newMessage.innerHeight();
-    var lastMessageHeight = newMessage.prev().innerHeight();
+    const clientHeight = messages.clientHeight;
+    const scrollTop = messages.scrollTop;
+    const scrollHeight = messages.scrollHeight;
+    const newMessageHeight = newMessage.offsetHeight;
+    const lastMessageHeight = newMessage.previousElementSibling ? newMessage.previousElementSibling.offsetHeight : 0;
 
     if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
-        messages.scrollTop(scrollHeight);
+        messages.scrollTop = scrollHeight;
     }
 }
 
 socket.on('connect', function() {
-    var params = jQuery.deparam(window.location.search);
+    const params = new URLSearchParams(window.location.search);
 
-    socket.emit('join', params, function(err) {
+    socket.emit('join', Object.fromEntries(params), function(err) {
         if(err) {
             alert(err);
             window.location.href = '/';
@@ -34,66 +34,77 @@ socket.on('disconnect', function() {
 });
 
 socket.on('updateUserList', function(users) {
-    var ol = jQuery('<ol></ol>');
+    const ol = document.createElement('ol');
     users.forEach(function(user) {
-        ol.append(jQuery('<li></li>').text(user));
+        const li = document.createElement('li');
+        li.textContent = user;
+        ol.appendChild(li);
     });
-    jQuery('#users').html(ol);
-})
+    const usersList = document.getElementById('users');
+    usersList.innerHTML = '';
+    usersList.appendChild(ol);
+});
 
 socket.on('newMessage', function(message) {
-    var formattedTime = moment(message.createdAt).format('h:mm a'); 
-    var template = jQuery('#message-template').html();
-    var html = Mustache.render(template, {
+    const formattedTime = moment(message.createdAt).format('h:mm a'); 
+    const template = document.getElementById('message-template').innerHTML;
+    const html = Mustache.render(template, {
         text: message.text,
         from: message.from,
         createdAt: formattedTime
     });
 
-    jQuery('#messages').append(html);
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    document.getElementById('messages').appendChild(div.firstElementChild);
     scrollToBottom();
 });
 
 socket.on('newLocationMessage', function(message) {
-    var template = jQuery('#location-message-template').html();
-    var formattedTime = moment(message.createdAt).format('h:mm a'); 
-    var html = Mustache.render(template, {
+    const template = document.getElementById('location-message-template').innerHTML;
+    const formattedTime = moment(message.createdAt).format('h:mm a'); 
+    const html = Mustache.render(template, {
         url: message.url,
         from: message.from,
         createdAt: formattedTime
     });
-    jQuery('#messages').append(html);
 
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    document.getElementById('messages').appendChild(div.firstElementChild);
     scrollToBottom();
 });
 
-jQuery('#message-form').on('submit', function(e) {
+document.getElementById('message-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    var messageTextBox = jQuery('[name=message]');
+    const messageTextBox = document.querySelector('[name=message]');
 
     socket.emit('createMessage', {
-        text: messageTextBox.val()
+        text: messageTextBox.value
     }, function() {
-        messageTextBox.val('');
+        messageTextBox.value = '';
     });
 });
 
-var locationButton = jQuery('#send-location');
-locationButton.on('click', function() {
+const locationButton = document.getElementById('send-location');
+locationButton.addEventListener('click', function() {
     if(!navigator.geolocation) {
         return alert('Geolocation not supported by your browser.');
     }
-    locationButton.attr('disabled', 'disabled').text('Sending location...');
+    locationButton.setAttribute('disabled', 'disabled');
+    locationButton.textContent = 'Sending location...';
 
     navigator.geolocation.getCurrentPosition(function(position) {
-        locationButton.removeAttr('disabled').text('Send location');
+        locationButton.removeAttribute('disabled');
+        locationButton.textContent = 'Send location';
         socket.emit('createLocationMessage', {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
         });
     }, function() {
-        locationButton.removeAttr('disabled').text('Send location');
+        locationButton.removeAttribute('disabled');
+        locationButton.textContent = 'Send location';
         alert('Unable to fetch location');
     });
 });
