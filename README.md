@@ -8,3 +8,7 @@
 
 ## How to Run Locally
 npm run start
+
+## Live Project Link
+You can access this application with this [link](https://node-chat-app-tylerd92.onrender.com/).
+The application is hosted on the Render platform.
